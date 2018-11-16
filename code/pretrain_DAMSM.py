@@ -228,16 +228,17 @@ if __name__ == "__main__":
     mkdir_p(model_dir)
     mkdir_p(image_dir)
 
-    torch.cuda.set_device(cfg.GPU_ID)
+    torch.device('cuda')
     cudnn.benchmark = True
 
     # Get data loader ##################################################
     imsize = cfg.TREE.BASE_SIZE * (2 ** (cfg.TREE.BRANCH_NUM-1))
     batch_size = cfg.TRAIN.BATCH_SIZE
     image_transform = transforms.Compose([
-        transforms.Scale(int(imsize * 76 / 64)),
+        transforms.Resize(int(imsize * 76 / 64)),
         transforms.RandomCrop(imsize),
         transforms.RandomHorizontalFlip()])
+    print(os.getcwd())
     dataset = TextDataset(cfg.DATA_DIR, 'train',
                           base_size=cfg.TREE.BASE_SIZE,
                           transform=image_transform)

@@ -3,7 +3,7 @@ CONFIG_NAME: 'attn2'
 DATASET_NAME: 'coco'
 DATA_DIR: '../data/coco'
 GPU_ID: 3
-WORKERS: 1
+WORKERS: 8
 
 B_VALIDATION: False
 TREE:
@@ -15,7 +15,7 @@ TRAIN:
     NET_G: '../models/coco_AttnGAN2.pth'
     B_NET_D: False
     BATCH_SIZE: 100
-    NET_E: '../DAMSMencoders/coco/text_encoder100.pth'
+    NET_E: '../DAMSMencoders/coco/text_encoder15.pth'
 
 
 GAN:

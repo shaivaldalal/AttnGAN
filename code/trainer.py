@@ -33,7 +33,7 @@ class condGANTrainer(object):
             mkdir_p(self.model_dir)
             mkdir_p(self.image_dir)
 
-        torch.cuda.set_device(cfg.GPU_ID)
+        torch.device('cuda')
         cudnn.benchmark = True
 
         self.batch_size = cfg.TRAIN.BATCH_SIZE
@@ -82,11 +82,11 @@ class condGANTrainer(object):
             else:  # cfg.TREE.BRANCH_NUM == 3:
                 from model import D_NET256 as D_NET
             # TODO: elif cfg.TREE.BRANCH_NUM > 3:
-            netG = G_DCGAN()
+            netG = nn.DataParallel(G_DCGAN())
             netsD = [D_NET(b_jcu=False)]
         else:
             from model import D_NET64, D_NET128, D_NET256
-            netG = G_NET()
+            netG = nn.DataParallel(G_NET())
             if cfg.TREE.BRANCH_NUM > 0:
                 netsD.append(D_NET64())
             if cfg.TREE.BRANCH_NUM > 1:
@@ -353,9 +353,9 @@ class condGANTrainer(object):
                 split_dir = 'valid'
             # Build and load the generator
             if cfg.GAN.B_DCGAN:
-                netG = G_DCGAN()
+                netG = nn.DataParallel(G_DCGAN())
             else:
-                netG = G_NET()
+                netG = nn.DataParallel(G_NET())
             netG.apply(weights_init)
             netG.cuda()
             netG.eval()
@@ -445,9 +445,9 @@ class condGANTrainer(object):
 
             # the path to save generated images
             if cfg.GAN.B_DCGAN:
-                netG = G_DCGAN()
+                netG = nn.DataParallel(G_DCGAN())
             else:
-                netG = G_NET()
+                netG = nn.DataParallel(G_NET())
             s_tmp = cfg.TRAIN.NET_G[:cfg.TRAIN.NET_G.rfind('.pth')]
             model_dir = cfg.TRAIN.NET_G
             state_dict = \

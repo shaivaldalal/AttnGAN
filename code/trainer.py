@@ -232,13 +232,14 @@ class condGANTrainer(object):
         # gen_iterations = start_epoch * self.num_batches
         for epoch in range(start_epoch, self.max_epoch):
             start_t = time.time()
-
+            print('-'*10)
+            print('\nEpoch: ',epoch)
+            print('-'*10)
             data_iter = iter(self.data_loader)
             step = 0
             while step < self.num_batches:
                 # reset requires_grad to be trainable for all Ds
                 # self.set_requires_grad_value(netsD, True)
-
                 ######################################################
                 # (1) Prepare training data and Compute text embeddings
                 ######################################################
@@ -301,7 +302,7 @@ class condGANTrainer(object):
                 if gen_iterations % 100 == 0:
                     print(D_logs + '\n' + G_logs)
                 # save images
-                if gen_iterations % 1000 == 0:
+                if gen_iterations % 500 == 0:
                     backup_para = copy_G_params(netG)
                     load_params(netG, avg_param_G)
                     self.save_img_results(netG, fixed_noise, sent_emb,

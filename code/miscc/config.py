@@ -17,7 +17,7 @@ __C.GPU_ID = 0
 __C.CUDA = True
 __C.WORKERS = 6
 
-__C.RNN_TYPE = 'LSTM'   # 'GRU'
+__C.RNN_TYPE = 'GRU'   # 'LSTM'
 __C.B_VALIDATION = False
 
 __C.TREE = edict()

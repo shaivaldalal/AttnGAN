@@ -82,11 +82,11 @@ class condGANTrainer(object):
             else:  # cfg.TREE.BRANCH_NUM == 3:
                 from model import D_NET256 as D_NET
             # TODO: elif cfg.TREE.BRANCH_NUM > 3:
-            netG = nn.DataParallel(G_DCGAN())
+            netG = G_DCGAN()
             netsD = [D_NET(b_jcu=False)]
         else:
             from model import D_NET64, D_NET128, D_NET256
-            netG = nn.DataParallel(G_NET())
+            netG = G_NET()
             if cfg.TREE.BRANCH_NUM > 0:
                 netsD.append(D_NET64())
             if cfg.TREE.BRANCH_NUM > 1:
@@ -348,15 +348,15 @@ class condGANTrainer(object):
 
     def sampling(self, split_dir):
         if cfg.TRAIN.NET_G == '':
-            print('Error: the path for morels is not found!')
+            print('Error: the path for models is not found!')
         else:
             if split_dir == 'test':
                 split_dir = 'valid'
             # Build and load the generator
             if cfg.GAN.B_DCGAN:
-                netG = nn.DataParallel(G_DCGAN())
+                netG = G_DCGAN()
             else:
-                netG = nn.DataParallel(G_NET())
+                netG = G_NET()
             netG.apply(weights_init)
             netG.cuda()
             netG.eval()
@@ -392,7 +392,7 @@ class condGANTrainer(object):
                 for step, data in enumerate(self.data_loader, 0):
                     cnt += batch_size
                     if step % 100 == 0:
-                        print('step: ', step)
+                        print('Step: ', step)
                     # if step > 50:
                     #     break
 
@@ -446,9 +446,9 @@ class condGANTrainer(object):
 
             # the path to save generated images
             if cfg.GAN.B_DCGAN:
-                netG = nn.DataParallel(G_DCGAN())
+                netG = G_DCGAN()
             else:
-                netG = nn.DataParallel(G_NET())
+                netG = G_NET()
             s_tmp = cfg.TRAIN.NET_G[:cfg.TRAIN.NET_G.rfind('.pth')]
             model_dir = cfg.TRAIN.NET_G
             state_dict = \

@@ -11,9 +11,9 @@ import torch, h5py
 import numpy as np
 import torch.nn as nn
 from collections import OrderedDict
-from HDGan.neuralDist.testNeuralDist  import test_nd
-from HDGan.neuralDist.neuralDistModel  import ImgSenRanking
-from HDGan.neuralDist.neuralDistModel  import ImageEncoder
+from neuralDist.testNeuralDist  import test_nd
+from neuralDist.neuralDistModel  import ImgSenRanking
+from neuralDist.neuralDistModel  import ImageEncoder
 
 
 if  __name__ == '__main__':

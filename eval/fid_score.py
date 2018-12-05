@@ -41,7 +41,7 @@ parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter)
 parser.add_argument('path', type=str, nargs=2,
                     help=('Path to the generated images or '
                           'to .npz statistic files'))
-parser.add_argument('--batch-size', type=int, default=64,
+parser.add_argument('--batch-size', type=int, default=12,
                     help='Batch size to use')
 parser.add_argument('--dims', type=int, default=2048,
                     choices=list(InceptionV3.BLOCK_INDEX_BY_DIM),
@@ -52,7 +52,7 @@ parser.add_argument('-c', '--gpu', default='', type=str,
 
 
 def get_activations(images, model, batch_size=64, dims=2048,
-                    cuda=False, verbose=False):
+                    cuda=True, verbose=False):
     """Calculates the activations of the pool_3 layer for all images.
     Params:
     -- images      : Numpy array of dimension (n_images, 3, hi, wi). The values
@@ -164,7 +164,7 @@ def calculate_frechet_distance(mu1, sigma1, mu2, sigma2, eps=1e-6):
 
 
 def calculate_activation_statistics(images, model, batch_size=64,
-                                    dims=2048, cuda=False, verbose=False):
+                                    dims=2048, cuda=True, verbose=False):
     """Calculation of the statistics used by the FID.
     Params:
     -- images      : Numpy array of dimension (n_images, 3, hi, wi). The values
@@ -189,7 +189,7 @@ def calculate_activation_statistics(images, model, batch_size=64,
     return mu, sigma
 
 
-def _compute_statistics_of_path(path, model, batch_size, dims, cuda):
+def _compute_statistics_of_path(path, model, batch_size, dims, cuda=True):
     if path.endswith('.npz'):
         f = np.load(path)
         m, s = f['mu'][:], f['sigma'][:]

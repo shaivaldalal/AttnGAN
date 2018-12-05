@@ -91,8 +91,8 @@ def get_activations(images, model, batch_size=64, dims=2048,
 
         batch = torch.from_numpy(images[start:end]).type(torch.FloatTensor)
         batch = Variable(batch, volatile=True)
-        if cuda:
-            batch = batch.cuda()
+        #if cuda:
+        batch = batch.cuda()
 
         pred = model(batch)[0]
 
@@ -221,8 +221,8 @@ def calculate_fid_given_paths(paths, batch_size, cuda, dims):
     block_idx = InceptionV3.BLOCK_INDEX_BY_DIM[dims]
 
     model = InceptionV3([block_idx])
-    if cuda:
-        model.cuda()
+    #if cuda:
+    model.cuda()
 
     m1, s1 = _compute_statistics_of_path(paths[0], model, batch_size,
                                          dims, cuda)

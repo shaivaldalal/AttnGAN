@@ -41,9 +41,9 @@ parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter)
 parser.add_argument('path', type=str, nargs=2,
                     help=('Path to the generated images or '
                           'to .npz statistic files'))
-parser.add_argument('--batch-size', type=int, default=12,
+parser.add_argument('--batch-size', type=int, default=8,
                     help='Batch size to use')
-parser.add_argument('--dims', type=int, default=2048,
+parser.add_argument('--dims', type=int, default=768,
                     choices=list(InceptionV3.BLOCK_INDEX_BY_DIM),
                     help=('Dimensionality of Inception features to use. '
                           'By default, uses pool3 features'))
